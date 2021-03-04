@@ -45,7 +45,7 @@ int main() {
     }
     std::cout << std::endl;
 
-    //draw_triangles_driver(std::move(intersection_defined_objects));
+    draw_triangles_driver(std::move(intersection_defined_objects));
     return 0;
 }
 

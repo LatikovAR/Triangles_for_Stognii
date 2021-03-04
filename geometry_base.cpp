@@ -204,26 +204,6 @@ vec mult_vec(const vec &v1, const vec &v2) {
     return vec(a, b, c);
 }
 
-vec vec::rotate_vec(const Normalized_Quaternion& quat) const {
-    Normalized_Quaternion adj_quat = quat.adj();
-
-    //(A * v) * A(adj) = T * A(adj);     A, T - quaternions
-    double t0, t1, t2, t3;
-    t0 = -quat.a1() * x_ - quat.a2() * y_ - quat.a3() * z_;
-    t1 = quat.a0() * x_ + quat.a2() * z_ - quat.a3() * y_;
-    t2 = quat.a0() * y_ + quat.a3() * x_ - quat.a1() * z_;
-    t3 = quat.a0() * z_ + quat.a1() * y_ - quat.a2() * x_;
-
-    //T * A(adj) = rotated_v
-    double x, y, z;
-    x = t0 * adj_quat.a1() + t1 * adj_quat.a0() + t2 * adj_quat.a3() - t3 * adj_quat.a2();
-    y = t0 * adj_quat.a2() + t2 * adj_quat.a0() + t3 * adj_quat.a1() - t1 * adj_quat.a3();
-    z = t0 * adj_quat.a3() + t3 * adj_quat.a0() + t1 * adj_quat.a2() - t2 * adj_quat.a1();
-
-    return vec(x, y, z);
-}
-
-
 vec_2d& vec_2d::operator+=(const vec_2d& v)& {
     x_ += v.x();
     y_ += v.y();
@@ -294,47 +274,6 @@ bool vec_2d::is_parallel(const vec_2d& v1, const vec_2d& v2) {
     if(fabs(v1_dir.x_ - v2_dir.x_) < DOUBLE_GAP) { return true; }
 
     return false;
-}
-
-
-
-
-//----------------------------------Normalized_Quaternion--------------------------
-
-Normalized_Quaternion::Normalized_Quaternion(double rotate_angle, const vec& axis) {
-    vec v{axis};
-    v.normalize();
-    double k = sin(rotate_angle / 2);
-
-    a0_ = cos(rotate_angle / 2);
-    a1_ = k * v.x();
-    a2_ = k * v.y();
-    a3_ = k * v.z();
-}
-
-Normalized_Quaternion Normalized_Quaternion::adj() const {
-    Normalized_Quaternion tmp{*this};
-    tmp.a1_ *= -1;
-    tmp.a2_ *= -1;
-    tmp.a3_ *= -1;
-    return tmp;
-}
-
-Normalized_Quaternion& Normalized_Quaternion::operator*=(const Normalized_Quaternion& rhs)& {
-    Normalized_Quaternion lhs{*this};
-
-    a0_ = lhs.a0_ * rhs.a0_ - lhs.a1_ * rhs.a1_ - lhs.a2_ * rhs.a2_ - lhs.a3_ * rhs.a3_;
-    a1_ = lhs.a0_ * rhs.a1_ + lhs.a1_ * rhs.a0_ + lhs.a2_ * rhs.a3_ - lhs.a3_ * rhs.a2_;
-    a2_ = lhs.a0_ * rhs.a2_ + lhs.a2_ * rhs.a0_ + lhs.a3_ * rhs.a1_ - lhs.a1_ * rhs.a3_;
-    a3_ = lhs.a0_ * rhs.a3_ + lhs.a3_ * rhs.a0_ + lhs.a1_ * rhs.a2_ - lhs.a2_ * rhs.a1_;
-
-    return *this;
-}
-
-Normalized_Quaternion operator*(const Normalized_Quaternion& lhs, const Normalized_Quaternion& rhs) {
-    Normalized_Quaternion tmp{lhs};
-    tmp *= rhs;
-    return tmp;
 }
 
 } //namespace geometry

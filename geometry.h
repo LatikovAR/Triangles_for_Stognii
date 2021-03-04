@@ -98,7 +98,6 @@ public:
     void normalize();
     bool is_null() const { return fabs(length()) < DOUBLE_GAP; }
     static bool is_parallel(const vec& v1, const vec& v2);
-    vec rotate_vec(const Normalized_Quaternion& quat) const;
 };
 
 vec operator+(const vec& v1, const vec& v2);
@@ -139,30 +138,6 @@ vec_2d operator-(const vec_2d& v1, const vec_2d& v2);
 vec_2d operator*(double a, const vec_2d& v);
 vec_2d operator*(const vec_2d& v, double a);
 vec_2d operator/(const vec_2d& v, double a);
-
-
-
-
-//--------------------------------------Normalized_Quaternion----------------------
-
-class Normalized_Quaternion final {
-private:
-    double a0_, a1_, a2_, a3_;
-public:
-    double a0() const { return a0_; }
-    double a1() const { return a1_; }
-    double a2() const { return a2_; }
-    double a3() const { return a3_; }
-
-    Normalized_Quaternion(double rotate_angle, const vec& axis);
-
-    Normalized_Quaternion adj() const;
-
-    Normalized_Quaternion& operator*=(const Normalized_Quaternion& rhs)&;
-};
-
-Normalized_Quaternion operator*(const Normalized_Quaternion& lhs, const Normalized_Quaternion& rhs);
-
 
 
 
