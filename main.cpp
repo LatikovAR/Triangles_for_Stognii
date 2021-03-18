@@ -56,5 +56,3 @@ int main() {
     tr.generate("input_example7.txt");
     return 0;
 }*/
-
-
