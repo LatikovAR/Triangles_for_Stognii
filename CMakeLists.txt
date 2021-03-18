@@ -13,7 +13,7 @@ find_package(glm
 set(GLFW D:/glfw-3.3.2.bin.WIN64)
 set(GLM D:/glm)
 
-add_library(geometry STATIC geometry_base.cpp geometry.cpp intersection_finder.cpp)
+add_library(geometry STATIC geometry_base.cpp geometry.cpp intersection_finder.cpp triangles_generator.cpp)
 add_library(vulkan_visualization STATIC vulkan_drawing.cpp)
 
 target_include_directories(vulkan_visualization PRIVATE

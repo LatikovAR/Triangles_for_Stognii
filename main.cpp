@@ -6,6 +6,7 @@
 #include "geometry.h"
 #include "intersection_finder.h"
 #include "vulkan_drawing.h"
+//#include "triangles_generator.h"
 
 using namespace geometry;
 
@@ -48,4 +49,12 @@ int main() {
     draw_triangles_driver(std::move(intersection_defined_objects));
     return 0;
 }
+
+/*
+int main() {
+    Triangles_Generator tr{};
+    tr.generate("input_example7.txt");
+    return 0;
+}*/
+
 

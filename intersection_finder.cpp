@@ -230,7 +230,7 @@ Geometry_Object_Storage::Geometry_Object_Storage(const std::vector<Undefined_Obj
 
 //-------------------------------------Intersection_Finder------------------------
 
-Intersection_Finder::Intersection_Finder(Geometry_Object_Storage&& objects):
+Intersection_Finder::Intersection_Finder(Geometry_Object_Storage objects):
     num_of_objects_(objects.capacity()),
     objects_(objects)
 {

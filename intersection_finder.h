@@ -111,10 +111,10 @@ private:
     std::vector<bool> intersection_flags_;
 public:
     //Flags order is object numbers order
-    Objects_and_Intersections(Geometry_Object_Storage&& objects,
-                              std::vector<bool>&& intersection_flags):
-        objects_(objects),
-        intersection_flags_(intersection_flags)
+    Objects_and_Intersections(Geometry_Object_Storage objects,
+                              std::vector<bool> intersection_flags):
+        objects_(std::move(objects)),
+        intersection_flags_(std::move(intersection_flags))
     {
         if(objects.capacity() != intersection_flags.size())
             throw std::invalid_argument("flags array isn't compatible with objects storage");
@@ -161,7 +161,7 @@ private:
     void root_point_case(const std::vector<Geometry_Object*>& p_objects,
                             const Object_Point* root_p);
 public:
-    Intersection_Finder(Geometry_Object_Storage&& objects);
+    Intersection_Finder(Geometry_Object_Storage objects);
 
     Objects_and_Intersections compute_intersections();
 };

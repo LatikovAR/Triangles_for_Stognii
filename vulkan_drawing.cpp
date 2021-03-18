@@ -1518,7 +1518,7 @@ private:
 
 }
 
-int draw_triangles_driver(const geometry::Objects_and_Intersections&& objects_for_draw) {
+int draw_triangles_driver(geometry::Objects_and_Intersections objects_for_draw) {
     std::vector<Vertex> vertices;
     std::vector<uint16_t> indices; //don't touch the type (uint16_t)!
 
